@@ -18,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
+  bool _rememberMe = false;
   bool _isLoading = false;
 
   @override
@@ -128,20 +129,40 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           const SizedBox(height: AppSpacing.xs),
-          Align(
-            alignment: Alignment.centerRight,
-            child: TextButton(
-              onPressed: () {
-                // TODO: navigate to forgot password screen
-              },
-              child: const Text(
-                'Forgot password?',
-                style: TextStyle(
-                  color: AppColors.commandBlue,
-                  fontWeight: FontWeight.w500,
+          Row(
+            children: [
+              Checkbox(
+                value: _rememberMe,
+                onChanged: (value) =>
+                    setState(() => _rememberMe = value ?? false),
+                activeColor: AppColors.logisticsNavy,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                visualDensity: VisualDensity.compact,
+              ),
+              const SizedBox(width: AppSpacing.xxs),
+              GestureDetector(
+                onTap: () => setState(() => _rememberMe = !_rememberMe),
+                child: const Text('Remember me', style: AppTextStyles.bodyMuted),
+              ),
+              const Spacer(),
+              TextButton(
+                onPressed: () {
+                  // TODO: navigate to forgot password screen
+                },
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  minimumSize: Size.zero,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                child: const Text(
+                  'Forgot password?',
+                  style: TextStyle(
+                    color: AppColors.commandBlue,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
           const SizedBox(height: AppSpacing.xs),
           ElevatedButton(

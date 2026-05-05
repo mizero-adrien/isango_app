@@ -21,6 +21,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
+  bool _acceptedTerms = false;
   bool _isLoading = false;
 
   @override
@@ -59,6 +60,15 @@ class _SignupScreenState extends State<SignupScreen> {
 
   Future<void> _handleSignUp() async {
     if (!_formKey.currentState!.validate()) return;
+    if (!_acceptedTerms) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please accept the Terms & Conditions to continue.'),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      return;
+    }
     setState(() => _isLoading = true);
     // TODO: replace with real auth call (Firebase, Supabase, etc.)
     await Future.delayed(const Duration(seconds: 1));
@@ -204,10 +214,52 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
           ),
           const SizedBox(height: AppSpacing.sm),
-          const Text(
-            'By creating an account you agree to our Terms of Service and Privacy Policy.',
-            style: AppTextStyles.label,
-            textAlign: TextAlign.center,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Checkbox(
+                value: _acceptedTerms,
+                onChanged: (value) =>
+                    setState(() => _acceptedTerms = value ?? false),
+                activeColor: AppColors.logisticsNavy,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                visualDensity: VisualDensity.compact,
+              ),
+              const SizedBox(width: AppSpacing.xxs),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () =>
+                      setState(() => _acceptedTerms = !_acceptedTerms),
+                  child: RichText(
+                    text: const TextSpan(
+                      style: AppTextStyles.label,
+                      children: [
+                        TextSpan(text: 'I agree to the '),
+                        TextSpan(
+                          text: 'Terms & Conditions',
+                          style: TextStyle(
+                            color: AppColors.commandBlue,
+                            fontWeight: FontWeight.w600,
+                            decoration: TextDecoration.underline,
+                            decorationColor: AppColors.commandBlue,
+                          ),
+                        ),
+                        TextSpan(text: ' and '),
+                        TextSpan(
+                          text: 'Privacy Policy',
+                          style: TextStyle(
+                            color: AppColors.commandBlue,
+                            fontWeight: FontWeight.w600,
+                            decoration: TextDecoration.underline,
+                            decorationColor: AppColors.commandBlue,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
