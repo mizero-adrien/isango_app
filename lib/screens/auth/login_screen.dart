@@ -55,6 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.surface,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.page),
@@ -88,14 +89,21 @@ class _LoginScreenState extends State<LoginScreen> {
       decoration: BoxDecoration(
         color: AppColors.cardWhite,
         borderRadius: BorderRadius.circular(AppRadii.card),
-        border: Border.all(color: AppColors.softBorder),
+        border: Border.all(color: AppColors.outlineVariant),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.10),
+            offset: const Offset(0, 4),
+            blurRadius: 12,
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text('Welcome back', style: AppTextStyles.headline),
+          Text('Welcome back', style: AppTextStyles.headline),
           const SizedBox(height: AppSpacing.xxs),
-          const Text('Sign in to your account', style: AppTextStyles.bodyMuted),
+          Text('Sign in to your account', style: AppTextStyles.bodyMuted),
           const SizedBox(height: AppSpacing.lg),
           TextFormField(
             controller: _emailController,
@@ -131,18 +139,22 @@ class _LoginScreenState extends State<LoginScreen> {
           const SizedBox(height: AppSpacing.xs),
           Row(
             children: [
-              Checkbox(
-                value: _rememberMe,
-                onChanged: (value) =>
-                    setState(() => _rememberMe = value ?? false),
-                activeColor: AppColors.logisticsNavy,
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                visualDensity: VisualDensity.compact,
+              SizedBox(
+                width: 20,
+                height: 20,
+                child: Checkbox(
+                  value: _rememberMe,
+                  onChanged: (value) =>
+                      setState(() => _rememberMe = value ?? false),
+                  activeColor: AppColors.logisticsNavy,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  visualDensity: VisualDensity.compact,
+                ),
               ),
-              const SizedBox(width: AppSpacing.xxs),
+              const SizedBox(width: AppSpacing.xs),
               GestureDetector(
                 onTap: () => setState(() => _rememberMe = !_rememberMe),
-                child: const Text('Remember me', style: AppTextStyles.bodyMuted),
+                child: Text('Remember me', style: AppTextStyles.bodyMuted),
               ),
               const Spacer(),
               TextButton(
@@ -154,17 +166,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   minimumSize: Size.zero,
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
-                child: const Text(
+                child: Text(
                   'Forgot password?',
-                  style: TextStyle(
+                  style: AppTextStyles.bodyMuted.copyWith(
                     color: AppColors.commandBlue,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: AppSpacing.md),
           ElevatedButton(
             onPressed: _isLoading ? null : _handleSignIn,
             style: ElevatedButton.styleFrom(
@@ -173,6 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
               disabledBackgroundColor:
                   AppColors.logisticsNavy.withValues(alpha: 0.6),
               minimumSize: const Size.fromHeight(52),
+              elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppRadii.button),
               ),
@@ -186,10 +199,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: AppColors.cardWhite,
                     ),
                   )
-                : const Text(
+                : Text(
                     'Sign in',
-                    style: TextStyle(
-                      fontSize: 16,
+                    style: AppTextStyles.body.copyWith(
+                      color: AppColors.cardWhite,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -200,14 +213,14 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildDivider() {
-    return const Row(
+    return Row(
       children: [
-        Expanded(child: Divider(color: AppColors.softBorder)),
+        const Expanded(child: Divider(color: AppColors.outlineVariant)),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
           child: Text('or continue with', style: AppTextStyles.bodyMuted),
         ),
-        Expanded(child: Divider(color: AppColors.softBorder)),
+        const Expanded(child: Divider(color: AppColors.outlineVariant)),
       ],
     );
   }
@@ -219,24 +232,21 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       style: OutlinedButton.styleFrom(
         minimumSize: const Size.fromHeight(52),
-        side: const BorderSide(color: AppColors.softBorder),
+        side: const BorderSide(color: AppColors.outlineVariant),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadii.button),
         ),
-        foregroundColor: AppColors.nearBlackInk,
+        foregroundColor: AppColors.onSurface,
+        backgroundColor: AppColors.cardWhite,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _GoogleLogo(),
           const SizedBox(width: AppSpacing.sm),
-          const Text(
+          Text(
             'Continue with Google',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: AppColors.nearBlackInk,
-            ),
+            style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w500),
           ),
         ],
       ),
@@ -247,13 +257,13 @@ class _LoginScreenState extends State<LoginScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text("Don't have an account?", style: AppTextStyles.bodyMuted),
+        Text("Don't have an account?", style: AppTextStyles.bodyMuted),
         TextButton(
           onPressed: () =>
               Navigator.pushReplacementNamed(context, AppRoutes.signUp),
-          child: const Text(
+          child: Text(
             'Sign up',
-            style: TextStyle(
+            style: AppTextStyles.bodyMuted.copyWith(
               color: AppColors.logisticsNavy,
               fontWeight: FontWeight.w600,
             ),
@@ -276,23 +286,33 @@ class _IsangoBrand extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 72,
-          height: 72,
+          width: 80,
+          height: 80,
           decoration: BoxDecoration(
-            color: AppColors.logisticsNavy,
+            color: AppColors.primaryContainer,
             borderRadius: BorderRadius.circular(AppRadii.card),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primaryContainer.withValues(alpha: 0.25),
+                offset: const Offset(0, 6),
+                blurRadius: 16,
+              ),
+            ],
           ),
           child: const Icon(
             Icons.location_on_rounded,
             color: AppColors.cardWhite,
-            size: 40,
+            size: 44,
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
-        const Text('Isango', style: AppTextStyles.display),
+        Text('Isango', style: AppTextStyles.display),
         const SizedBox(height: AppSpacing.xxs),
-        Text(subtitle,
-            style: AppTextStyles.bodyMuted, textAlign: TextAlign.center),
+        Text(
+          subtitle,
+          style: AppTextStyles.bodyMuted,
+          textAlign: TextAlign.center,
+        ),
       ],
     );
   }
@@ -306,7 +326,7 @@ class _GoogleLogo extends StatelessWidget {
       height: 24,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: AppColors.softBorder),
+        border: Border.all(color: AppColors.outlineVariant),
         color: AppColors.cardWhite,
       ),
       child: const Center(

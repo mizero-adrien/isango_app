@@ -115,9 +115,9 @@ class _SignupScreenState extends State<SignupScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text('Create account', style: AppTextStyles.headline),
+          Text('Create account', style: AppTextStyles.headline),
           const SizedBox(height: AppSpacing.xxs),
-          const Text('Join Isango to explore events', style: AppTextStyles.bodyMuted),
+          Text('Join Isango to explore events', style: AppTextStyles.bodyMuted),
           const SizedBox(height: AppSpacing.lg),
           TextFormField(
             controller: _nameController,
@@ -231,9 +231,9 @@ class _SignupScreenState extends State<SignupScreen> {
                   onTap: () =>
                       setState(() => _acceptedTerms = !_acceptedTerms),
                   child: RichText(
-                    text: const TextSpan(
+                    text: TextSpan(
                       style: AppTextStyles.label,
-                      children: [
+                      children: const [
                         TextSpan(text: 'I agree to the '),
                         TextSpan(
                           text: 'Terms & Conditions',
@@ -270,7 +270,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text('Already have an account?', style: AppTextStyles.bodyMuted),
+        Text('Already have an account?', style: AppTextStyles.bodyMuted),
         TextButton(
           onPressed: () =>
               Navigator.pushReplacementNamed(context, AppRoutes.login),
@@ -312,7 +312,7 @@ class _IsangoBrand extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
-        const Text('Isango', style: AppTextStyles.display),
+        Text('Isango', style: AppTextStyles.display),
         const SizedBox(height: AppSpacing.xxs),
         Text(subtitle,
             style: AppTextStyles.bodyMuted, textAlign: TextAlign.center),

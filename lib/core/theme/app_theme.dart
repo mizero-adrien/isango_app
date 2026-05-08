@@ -1,24 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:isango_app/core/theme/app_colors.dart';
 import 'package:isango_app/core/theme/app_radii.dart';
 
 import 'app_text_styles.dart';
 
 class AppTheme {
-  static ThemeData light(){
-    final colorScheme = ColorScheme.fromSeed(
-      seedColor: AppColors.logisticsNavy,
-      primary: AppColors.logisticsNavy,
-      secondary: AppColors.commandBlue,
-      surface: AppColors.cardWhite,
-      error: AppColors.criticalRed,
+  static ThemeData light() {
+    final colorScheme = ColorScheme(
       brightness: Brightness.light,
+      primary: AppColors.primaryContainer,
+      onPrimary: AppColors.onPrimary,
+      primaryContainer: AppColors.primaryContainer,
+      onPrimaryContainer: AppColors.onPrimaryContainer,
+      secondary: AppColors.secondary,
+      onSecondary: AppColors.onSecondary,
+      secondaryContainer: AppColors.secondaryContainer,
+      onSecondaryContainer: AppColors.onSecondaryContainer,
+      surface: AppColors.surfaceContainerLowest,
+      onSurface: AppColors.onSurface,
+      error: AppColors.error,
+      onError: AppColors.onError,
     );
+
+    // Apply Lexend as the base font for all Material text roles, then
+    // override display and headline slots with Spline Sans.
+    final textTheme = GoogleFonts.lexendTextTheme().copyWith(
+      displayLarge: AppTextStyles.display,
+      headlineMedium: AppTextStyles.headline,
+      titleMedium: AppTextStyles.title,
+      bodyLarge: AppTextStyles.body,
+      bodyMedium: AppTextStyles.bodyMuted,
+      labelMedium: AppTextStyles.label,
+    );
+
     return ThemeData(
       useMaterial3: true,
-      scaffoldBackgroundColor: AppColors.mistBackground,
+      scaffoldBackgroundColor: AppColors.surface,
       colorScheme: colorScheme,
-      appBarTheme: const AppBarTheme(
+      textTheme: textTheme,
+      appBarTheme: AppBarTheme(
         backgroundColor: AppColors.cardWhite,
         foregroundColor: AppColors.logisticsNavy,
         elevation: 0,
@@ -30,19 +51,19 @@ class AppTheme {
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadii.card),
-          side: const BorderSide(color: AppColors.softBorder)
+          side: const BorderSide(color: AppColors.outlineVariant),
         ),
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: AppColors.cardWhite,
         indicatorColor: AppColors.paleSignalBlue,
-        iconTheme: WidgetStateProperty.resolveWith((states){
+        iconTheme: WidgetStateProperty.resolveWith((states) {
           final color = states.contains(WidgetState.selected)
               ? AppColors.logisticsNavy
               : AppColors.mutedOperationalInk;
           return IconThemeData(color: color);
         }),
-        labelTextStyle: WidgetStateProperty.resolveWith((states){
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
           final color = states.contains(WidgetState.selected)
               ? AppColors.logisticsNavy
               : AppColors.mutedOperationalInk;
@@ -51,39 +72,34 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.cardWhite,
-        contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 12
-      ),
+        fillColor: AppColors.surface,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadii.input),
-          borderSide: const BorderSide(color: AppColors.softBorder)
+          borderSide: const BorderSide(color: AppColors.outlineVariant),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadii.input),
-          borderSide: const BorderSide(color: AppColors.softBorder),
+          borderSide: const BorderSide(color: AppColors.outlineVariant),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadii.input),
           borderSide: const BorderSide(
-              color: AppColors.logisticsNavy,
-              width: 2
+            color: AppColors.logisticsNavy,
+            width: 2,
           ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadii.input),
+          borderSide: const BorderSide(color: AppColors.criticalRed),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppRadii.input),
           borderSide: const BorderSide(
-              color: AppColors.criticalRed
+            color: AppColors.criticalRed,
+            width: 2,
           ),
-        ),),
-      textTheme: const TextTheme(
-        displayLarge: AppTextStyles.display,
-        headlineMedium: AppTextStyles.headline,
-        titleMedium: AppTextStyles.title,
-        bodyLarge: AppTextStyles.body,
-        bodyMedium: AppTextStyles.bodyMuted,
-        labelMedium: AppTextStyles.label
+        ),
       ),
     );
   }

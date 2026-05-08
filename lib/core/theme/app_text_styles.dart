@@ -1,45 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
 class AppTextStyles {
-  static const display = TextStyle(
-    fontSize: 32,
-    height: 1.25,
-    fontWeight: FontWeight.w700,
-    color: AppColors.logisticsNavy,
-  );
+  // Spline Sans — display & headline
+  static TextStyle get display => GoogleFonts.splineSans(
+        fontSize: 32,
+        height: 1.25,
+        fontWeight: FontWeight.w700,
+        letterSpacing: -0.64,
+        color: AppColors.primaryContainer,
+      );
 
-  static const headline = TextStyle(
-      fontSize: 24,
-      height: 1.33,
-      fontWeight: FontWeight.w700,
-      color: AppColors.logisticsNavy,
-  );
+  static TextStyle get headline => GoogleFonts.splineSans(
+        fontSize: 24,
+        height: 1.33,
+        fontWeight: FontWeight.w700,
+        letterSpacing: -0.24,
+        color: AppColors.primaryContainer,
+      );
 
-  static const title = TextStyle(
-      fontSize: 18,
-      height: 1.33,
-      fontWeight: FontWeight.w600,
-      color: AppColors.nearBlackInk,
-  );
+  // Lexend — titles, body, labels
+  static TextStyle get title => GoogleFonts.lexend(
+        fontSize: 18,
+        height: 1.33,
+        fontWeight: FontWeight.w600,
+        color: AppColors.onSurface,
+      );
 
-  static const body = TextStyle(
-    fontSize: 16,
-    height: 1.5,
-    color: AppColors.nearBlackInk,
-  );
+  static TextStyle get body => GoogleFonts.lexend(
+        fontSize: 16,
+        height: 1.5,
+        color: AppColors.onSurface,
+      );
 
-  static const bodyMuted = TextStyle(
-    fontSize: 14,
-    height: 1.43,
-    color: AppColors.mutedOperationalInk,
-  );
-  static const label = TextStyle(
-    fontSize: 12,
-    height: 1.33,
-    color: AppColors.mutedOperationalInk,
-  );
+  static TextStyle get bodyMuted => GoogleFonts.lexend(
+        fontSize: 14,
+        height: 1.43,
+        color: AppColors.onSurfaceVariant,
+      );
 
-
+  static TextStyle get label => GoogleFonts.lexend(
+        fontSize: 12,
+        height: 1.33,
+        fontWeight: FontWeight.w600,
+        color: AppColors.onSurfaceVariant,
+      );
 }
